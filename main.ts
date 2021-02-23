@@ -8,6 +8,16 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
         `)
     radio.sendString("stop")
 })
+input.onSound(DetectedSound.Loud, function () {
+    basic.showLeds(`
+        . . . . .
+        . . # . .
+        . # . # .
+        . . # . .
+        . . . . .
+        `)
+    radio.sendString("stop")
+})
 input.onButtonPressed(Button.A, function () {
     basic.showLeds(`
         . . # . .
@@ -39,6 +49,7 @@ basic.showLeds(`
     . . . . .
     `)
 radio.setGroup(1)
+input.setSoundThreshold(SoundThreshold.Loud, 128)
 basic.forever(function () {
 	
 })
