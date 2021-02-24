@@ -26,7 +26,7 @@ input.onButtonPressed(Button.A, function () {
         . . # . .
         . . # . .
         `)
-    radio.sendString("vor")
+    radio.sendString("langsamer")
 })
 input.onButtonPressed(Button.AB, function () {
     basic.showLeds(`
@@ -39,7 +39,14 @@ input.onButtonPressed(Button.AB, function () {
     radio.sendString("zurück")
 })
 input.onButtonPressed(Button.B, function () {
-	
+    basic.showLeds(`
+        . . # . .
+        . # # # .
+        # . # . #
+        . . # . .
+        . . # . .
+        `)
+    radio.sendString("schneller")
 })
 basic.showLeds(`
     . . . . .
@@ -49,7 +56,7 @@ basic.showLeds(`
     . . . . .
     `)
 radio.setGroup(1)
-input.setSoundThreshold(SoundThreshold.Loud, 128)
+input.setSoundThreshold(SoundThreshold.Loud, 160)
 basic.forever(function () {
 	
 })
