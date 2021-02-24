@@ -8,19 +8,6 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
         `)
     radio.sendString("stop")
 })
-function zeigeRichtung () {
-    if (r == 2) {
-        basic.showArrow(ArrowNames.East)
-    } else if (r == 1) {
-        basic.showArrow(ArrowNames.NorthEast)
-    } else if (r == 0) {
-        basic.showArrow(ArrowNames.North)
-    } else if (r == -1) {
-        basic.showArrow(ArrowNames.NorthWest)
-    } else if (r == -2) {
-        basic.showArrow(ArrowNames.West)
-    }
-}
 input.onSound(DetectedSound.Loud, function () {
     basic.showLeds(`
         . . . . .
@@ -61,6 +48,13 @@ input.onButtonPressed(Button.B, function () {
         `)
     radio.sendString("schneller")
 })
+function bestimmeRichtung () {
+    // Wenn zu weit gedreht, wird sonst genau die entgegengesetzte Richtung gesetzt
+    if (input.acceleration(Dimension.Y) > 0) {
+        r = 180 * (Math.atan2(input.acceleration(Dimension.Y), -1 * input.acceleration(Dimension.X)) / 3.141592653589793) - 90
+    }
+    r = Math.constrain(r, -45, 45)
+}
 let r = 0
 basic.showLeds(`
     . . . . .
@@ -72,11 +66,6 @@ basic.showLeds(`
 radio.setGroup(1)
 input.setSoundThreshold(SoundThreshold.Loud, 160)
 basic.forever(function () {
-    if (10 < input.rotation(Rotation.Pitch) && input.rotation(Rotation.Pitch) < 80) {
-        r = Math.round(Math.map(Math.constrain(input.rotation(Rotation.Roll), -45, 45), -45, 45, -2, 2))
-    } else {
-        r = 0
-    }
-    zeigeRichtung()
+    bestimmeRichtung()
     radio.sendNumber(r)
 })
